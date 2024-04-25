@@ -1,43 +1,56 @@
-import React, { useState } from 'react';
-import favicon from '../../assets/favicon.ico'
-import { Link, useNavigate } from "react-router-dom";
-import users from './users.json'; 
+import React, { useState, useEffect } from 'react';
+import favicon from '../../assets/favicon.ico';
+import { Link, useNavigate } from 'react-router-dom';
+import users from './users.json';
+import RaptorX from 'raptorx.ai';
 
-function LoginPage() {
-  
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("isLoggedIn") === "true");
+function LoginPage({ }) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn') === 'true');
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
-    const user = users.find(user => user.email === email && user.password === password);
+    const user = users.find((user) => user.email === email && user.password === password);
     if (user) {
       setIsLoggedIn(true);
-      localStorage.setItem('loggedInUserEmail', email); // Set the logged-in user email in local storage
+      // instance.setCustomerId(email)
+      // instance.capture("login",email)
+      localStorage.setItem('isLoggedIn', true);
+      localStorage.setItem('loggedInUserEmail', email);
       navigate('/home');
     } else {
-      alert("Invalid email or password");
+      alert('Invalid email or password');
+      instance.capture("invalid_login",email)
     }
   };
-  
-  
+
   const handleLogout = () => {
     setIsLoggedIn(false);
-    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem('isLoggedIn');
     navigate('/login');
   };
 
+  useEffect(() => {
+    const instance = new RaptorX({
+      api_key: '9a60f01e9b7d2d5d37a1b134241311fd7dfdbc38',
+    });
+
+    // const captureLoginEvent = () => {
+    //   instance.capture('Email', email);
+    // };
+
+    // captureLoginEvent();
+
+   
+  }, [email]);
+
   return (
-    <div className='bg-[#020811]'>
+    <div className="bg-[#020811]">
       <div className="flex h-screen flex-1 flex-col justify-center px-6 py-12 lg:px-8 ">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img
-            className="mx-auto h-10 w-auto"
-            src={favicon}
-            alt="RaptorX.ai"
-          />
+          <img className="mx-auto h-10 w-auto" src={favicon} alt="RaptorX.ai" />
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-300">
             Sign in to your account
           </h2>
@@ -82,16 +95,17 @@ function LoginPage() {
                 />
               </div>
               <div className="flex flex-end justify-end mt-2 text-sm">
-                  <Link to="/forgotpassword" className="font-semibold text-gray-400 hover:text-gray-300">
-                    Forgot password?
-                  </Link>
+                <Link to="/forgotpassword" className="font-semibold text-gray-400 hover:text-gray-300">
+                  Forgot password?
+                </Link>
               </div>
             </div>
 
             <div>
               <button
                 type="submit"
-                className="w-full bg-gradient-to-br from-teal-400 to-blue-500 rounded-md border border-blue-500 px-4 py-2 text-white">
+                className="w-full bg-gradient-to-br from-teal-400 to-blue-500 rounded-md border border-blue-500 px-4 py-2 text-white"
+              >
                 Sign in
               </button>
             </div>
@@ -104,7 +118,7 @@ function LoginPage() {
             </Link>
           </p>
 
-          {isLoggedIn ? ( 
+          {isLoggedIn ? (
             <button onClick={handleLogout} className="logout-btn">
               Logout
             </button>

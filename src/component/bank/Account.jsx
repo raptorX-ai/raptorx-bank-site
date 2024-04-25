@@ -83,10 +83,7 @@ export default function Account({ }) {
                   <dd className="text-gray-400 sm:col-span-2">{loggedInUserEmail}</dd>
                 </div>
 
-                <div className="px-3 grid grid-cols-1 gap-1 py-3 even:bg-gray-700 sm:grid-cols-3 sm:gap-4">
-                  <dt className="font-medium text-gray-400">Balance</dt>
-                  <dd className="text-gray-400 sm:col-span-2">{loggedInUser.balance}</dd>
-                </div>
+                
               </div>
             </div>
           </div>

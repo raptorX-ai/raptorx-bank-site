@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  useNavigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, useNavigate } from "react-router-dom";
 import "./App.css";
 import SignupPage from "./component/core/SignupPage";
 import LoginPage from "./component/core/LoginPage";
@@ -19,62 +14,38 @@ import PaymentSuccess from "./component/bank/saving/PaymentSuccess";
 import users from "./component/core/users.json";
 
 function App() {
-  const [balance, setBalance] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState({});
-  const [loggedInUser, setLoggedInUser] = useState();
-  const [loggedInUserEmail, setLoggedInUserEmail] = useState();
+  const [balance, setBalance] = useState(() => {
+    const storedBalance = localStorage.getItem("balance");
+    return storedBalance ? parseInt(storedBalance) : null;
+  });
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loggedInUserEmail, setLoggedInUserEmail] = useState(null);
   const [usersData, setUsersData] = useState(users);
-  const [isLoading, setIsLoading] = useState(true); 
-  const [error, setError] = useState(null); 
+  const navigate = useNavigate();
 
-  const navigate = useNavigate(); 
+  useEffect(() => {
+    const email = localStorage.getItem("loggedInUserEmail");
+    if (email) {
+      setIsLoggedIn(true);
+      setLoggedInUserEmail(email);
+    }
+  }, []);
 
   const updateBalance = (newBalance) => {
     setBalance(newBalance);
+    localStorage.setItem("balance", newBalance.toString());
   };
-
-  useEffect(() => {
-    localStorage.setItem("balance", balance);
-  }, [balance]);
-
-  useEffect(() => {
-    localStorage.setItem("users", JSON.stringify(usersData));
-  }, [usersData]);
-
-  useEffect(() => {
-    if (isLoggedIn && loggedInUserEmail) {
-      const currentUser = usersData.find((user) => user.email === loggedInUserEmail);
-      if (currentUser) {
-        setBalance(currentUser.balance);
-      }
-    }
-  }, [isLoggedIn, loggedInUserEmail, usersData]);
 
   const handleLogin = (email) => {
-    console.log("Logging in with email:", email);
-    const user = users.find((user) => user.email === email);
-    if (user) {
-      setIsLoggedIn(true);
-      setLoggedInUser(user);
-      setBalance(user.balance || 0); // Set balance here
-    }
-  };
-  
-
-  const handleReceiveMoney = (amount) => {
-    // Update balance in usersData
-    const updatedUsersData = usersData.map((user) => {
-      if (user.email === loggedInUserEmail) {
-        return { ...user, balance: user.balance + amount };
-      }
-      return user;
-    });
-    setUsersData(updatedUsersData);
-
-    // Update balance state
-    setBalance((prevBalance) => prevBalance + amount);
+    setIsLoggedIn(true);
+    setLoggedInUserEmail(email);
   };
 
+  const handleAddMoney = (amount) => {
+    const updatedBalance = balance + amount;
+    updateBalance(updatedBalance);
+    navigate("/success");
+  };
 
   const handleSendMoney = (amount, recipientAccountNumber, recipientIFSC) => {
     if (balance < amount) {
@@ -82,111 +53,81 @@ function App() {
       return;
     }
   
-    const senderIndex = usersData.findIndex(
-      (user) => user.email === loggedInUserEmail
-    );
+    const updatedSenderBalance = balance - amount;
+    updateBalance(updatedSenderBalance);
   
     const recipientIndex = usersData.findIndex(
       (user) =>
-        user.accountNumber === recipientAccountNumber &&
-        user.ifscCode === recipientIFSC
+        user.accountNumber === recipientAccountNumber && user.ifscCode === recipientIFSC
     );
   
     if (recipientIndex === -1) {
-      alert(
-        "Recipient not found. Please check the account number and IFSC code."
-      );
+      alert("Recipient account not found");
       return;
     }
   
-    // Update sender's balance
-    const updatedSenderBalance = balance - amount;
-    setBalance(updatedSenderBalance);
+    // const updatedRecipientBalance = usersData[recipientIndex].balance + amount;
+    // console.log(usersData)
   
-    // Update recipient's balance
-    const updatedUsersData = [...usersData];
-    const recipientBalanceBeforeUpdate = parseFloat(
-      updatedUsersData[recipientIndex].balance
-    );
-    console.log("Recipient Balance Before Update:", recipientBalanceBeforeUpdate);
-    updatedUsersData[recipientIndex].balance = recipientBalanceBeforeUpdate + amount;
+    // //Update recipient balance in usersData
+    // const updatedUsersData = [...usersData];
+    // updatedUsersData[recipientIndex] = {
+    //   ...updatedUsersData[recipientIndex],
+    //   balance: updatedRecipientBalance,
+    // };
+    // setUsersData(updatedUsersData);
+
+    // const updatedRecipientBalance = balance + amount;
+    // console.log(updatedRecipientBalance)
+
+    // const updatedUsersData = updatedRecipientBalance;
+    // updateBalance(updatedRecipientBalance);
+
+
+
+    const updatedRecipientBalance = usersData[recipientIndex].balance + amount;
+    console.log(usersData[recipientIndex])
   
-    const recipientBalanceAfterUpdate = parseFloat(
-      updatedUsersData[recipientIndex].balance
-    );
-    console.log("Recipient Balance After Update:", recipientBalanceAfterUpdate);
-  
+    //Update recipient balance in usersData
+    const updatedUsersData = updatedRecipientBalance;
     setUsersData(updatedUsersData);
+
+  
+    console.log("Recipient current balance:", usersData[recipientIndex].balance);
+    console.log("Recipient updated balance:", updatedRecipientBalance);
   };
-
-
-  
-  const handleAddMoney = (amount) => {
-    const updatedBalance = balance + amount;
-    setBalance(updatedBalance);
-
-    navigate("/success");
-    setTimeout(() => {
-      navigate("/home");
-    }, 2000);
-  };
-  
-  
-
-  
-
-  
-  useEffect(() => {
-    const email = localStorage.getItem("loggedInUserEmail");
-    console.log("Logged-in user email:", email);
-    setLoggedInUserEmail(email);
-
-    if (email) {
-      const user = users.find(user => user.email === email);
-      if (user) {
-        setLoggedInUser(user);
-      } else {
-        setError("User not found"); 
-      }
-    }
-
-    setIsLoading(false); 
-  }, []);
-  
-
 
   return (
     <>
-      <Routes>
-        <Route path="/" element={<SignupPage />} />
-        <Route path="/signup" element={<SignupPage />} />
-        <Route path="/login" element={<LoginPage handleLogin={handleLogin}/>} />
-        <Route path="/forgotpassword" element={<ForgotPassword />} />
-
-        <Route path="/transactions" element={<Transaction />} />
-        <Route
-          path="/home"
-          element={<Dashboard isLoggedIn={isLoggedIn} loggedInUser={loggedInUser} usersData={usersData} loggedInUserEmail={loggedInUserEmail} balance={balance} />}
-        />
-
-        {/* <Route path="/home" element={<Dashboard usersData={usersData} isLoggedIn={isLoggedIn} balance={balance} />} /> */}
-        <Route
-          path="/addmoney"
-          element={<AddMoney handleAddMoney={handleAddMoney} />}
-        />
-        <Route path="/success" element={<PaymentSuccess />} />
-        <Route path="/account" element={<Account />} />
-
-        <Route path="/sendmoney" element={<SendMoney
-  loggedInUser={loggedInUser}
-  handleSendMoney={handleSendMoney}
-  updateBalance={updateBalance} // Pass updateBalance function as prop
-/>} />
-        
-
-
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      
+        <Routes>
+          <Route path="/" element={<SignupPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/login" element={<LoginPage handleLogin={handleLogin} />} />
+          <Route path="/forgotpassword" element={<ForgotPassword />} />
+          <Route path="/transactions" element={<Transaction />} />
+          <Route
+            path="/home"
+            element={<Dashboard isLoggedIn={isLoggedIn} balance={balance} />}
+          />
+          <Route
+            path="/addmoney"
+            element={<AddMoney handleAddMoney={handleAddMoney} />}
+          />
+          <Route path="/success" element={<PaymentSuccess />} />
+          <Route path="/account" element={<Account />} />
+          <Route
+            path="/sendmoney"
+            element={
+              <SendMoney
+                loggedInUserEmail={loggedInUserEmail}
+                handleSendMoney={handleSendMoney}
+              />
+            }
+          />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      
     </>
   );
 }

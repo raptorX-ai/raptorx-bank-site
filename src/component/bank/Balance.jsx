@@ -32,6 +32,8 @@ const data = {
 };
 
 export default function Balance({ balance }) {
+
+  console.log("Current balance:", balance);
   
   return (
     <>

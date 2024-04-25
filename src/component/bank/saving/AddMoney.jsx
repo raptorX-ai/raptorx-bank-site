@@ -1,9 +1,9 @@
-import  { useState } from "react";
+import React, { useState } from "react";
 import favicon from "../../../assets/favicon.ico";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function AddMoney({ handleAddMoney }) {
-  const [amount, setAmount] = useState();
+  const [amount, setAmount] = useState("");
   const navigate = useNavigate();
 
   const handleChange = (e) => {
