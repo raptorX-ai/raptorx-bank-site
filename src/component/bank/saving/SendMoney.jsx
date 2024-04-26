@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import favicon from "../../../assets/favicon.ico";
 import { Link, useNavigate } from "react-router-dom";
 
-export default function SendMoney({ handleSendMoney  }) {
+export default function SendMoney({ handleSendMoney, addTransaction }) {
   const [amount, setAmount] = useState("");
   const [recipientAccountNumber, setRecipientAccountNumber] = useState("");
   const [recipientIFSC, setRecipientIFSC] = useState("");
@@ -23,6 +23,17 @@ export default function SendMoney({ handleSendMoney  }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     handleSendMoney(Number(amount), recipientAccountNumber, recipientIFSC);
+
+    addTransaction({
+      type: "Send Money",
+      amount: amount,
+      sender: loggedInUserEmail,
+      receiver: loggedInUserEmail, 
+      balanceBefore: balance,
+      balanceAfter: updatedBalance,
+    });
+
+
     navigate("/success");
     setTimeout(() => {
       navigate("/home");

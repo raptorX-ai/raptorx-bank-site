@@ -21,6 +21,11 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loggedInUserEmail, setLoggedInUserEmail] = useState(null);
   const [usersData, setUsersData] = useState(users);
+  const [transactions, setTransactions] = useState([]);
+  const addTransaction = (transaction) => {
+    setTransactions([...transactions, transaction]);
+    console.log('Updated transactions:', transactions);
+  };
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -44,6 +49,14 @@ function App() {
   const handleAddMoney = (amount) => {
     const updatedBalance = balance + amount;
     updateBalance(updatedBalance);
+    addTransaction({
+      type: "Add Money",
+      amount: amount,
+      sender: loggedInUserEmail,
+      receiver: loggedInUserEmail,
+      balanceBefore: balance,
+      balanceAfter: updatedBalance,
+    });
     navigate("/success");
   };
 
@@ -92,6 +105,15 @@ function App() {
     const updatedUsersData = updatedRecipientBalance;
     setUsersData(updatedUsersData);
 
+    addTransaction({
+      type: "Send Money",
+      amount: amount,
+      sender: loggedInUserEmail,
+      receiver: updatedUsersData[recipientIndex],
+      balanceBefore: balance,
+      balanceAfter: updatedSenderBalance,
+    });
+
   
     console.log("Recipient current balance:", usersData[recipientIndex].balance);
     console.log("Recipient updated balance:", updatedRecipientBalance);
@@ -105,14 +127,14 @@ function App() {
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/login" element={<LoginPage handleLogin={handleLogin} />} />
           <Route path="/forgotpassword" element={<ForgotPassword />} />
-          <Route path="/transactions" element={<Transaction />} />
+          <Route path="/transactions" element={<Transaction transactions={transactions}/>} />
           <Route
             path="/home"
-            element={<Dashboard isLoggedIn={isLoggedIn} balance={balance} />}
+            element={<Dashboard isLoggedIn={isLoggedIn} balance={balance}/>}
           />
           <Route
             path="/addmoney"
-            element={<AddMoney handleAddMoney={handleAddMoney} />}
+            element={<AddMoney loggedInUserEmail={loggedInUserEmail} handleAddMoney={handleAddMoney} addTransaction={addTransaction}/>}
           />
           <Route path="/success" element={<PaymentSuccess />} />
           <Route path="/account" element={<Account />} />
@@ -120,6 +142,7 @@ function App() {
             path="/sendmoney"
             element={
               <SendMoney
+                addTransaction={addTransaction}
                 loggedInUserEmail={loggedInUserEmail}
                 handleSendMoney={handleSendMoney}
               />

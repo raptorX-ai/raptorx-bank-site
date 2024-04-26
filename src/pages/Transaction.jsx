@@ -7,7 +7,7 @@ import {
 } from "material-react-table";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
-export default function Transaction({ email }) {
+export default function Transaction({ email, transactions }) {
   const [transactionData, setTransactionData] = useState([]);
 
   useEffect(() => {

@@ -12,19 +12,24 @@ function LoginPage({ }) {
 
   const handleLogin = (e) => {
     e.preventDefault();
+    const instance = new RaptorX({
+      api_key: '9a60f01e9b7d2d5d37a1b134241311fd7dfdbc38',
+    });
+  
     const user = users.find((user) => user.email === email && user.password === password);
     if (user) {
       setIsLoggedIn(true);
-      // instance.setCustomerId(email)
-      // instance.capture("login",email)
+      instance.setCustomerId(email)
+      instance.capture("login", email)
       localStorage.setItem('isLoggedIn', true);
       localStorage.setItem('loggedInUserEmail', email);
       navigate('/home');
     } else {
       alert('Invalid email or password');
-      instance.capture("invalid_login",email)
+      instance.capture("invalid_login", email);
     }
   };
+  
 
   const handleLogout = () => {
     setIsLoggedIn(false);
@@ -32,19 +37,7 @@ function LoginPage({ }) {
     navigate('/login');
   };
 
-  useEffect(() => {
-    const instance = new RaptorX({
-      api_key: '9a60f01e9b7d2d5d37a1b134241311fd7dfdbc38',
-    });
 
-    // const captureLoginEvent = () => {
-    //   instance.capture('Email', email);
-    // };
-
-    // captureLoginEvent();
-
-   
-  }, [email]);
 
   return (
     <div className="bg-[#020811]">

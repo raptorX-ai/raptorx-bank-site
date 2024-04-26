@@ -8,6 +8,7 @@ export default function Account({ }) {
   const [loggedInUserEmail, setLoggedInUserEmail] = useState(null);
   const [isLoading, setIsLoading] = useState(true); 
   const [error, setError] = useState(null); 
+  const navigate = useNavigate();
 
   // Logout function
   const handleLogout = () => {
