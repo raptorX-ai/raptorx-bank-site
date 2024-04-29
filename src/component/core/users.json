@@ -12,7 +12,7 @@
     "password": "zxcv",
     "name": "Pratyusha Vemur",
     "accountNumber": "987654321",
-    "ifscCode": "XYZ789",
+    "ifscCode": "XYZ123",
     "balance": 11000
   },
   {
@@ -20,7 +20,7 @@
     "password": "qwer",
     "name": "Jitendra Chaudhari",
     "accountNumber": "456789123",
-    "ifscCode": "DEF456",
+    "ifscCode": "ZXC123",
     "balance": 12000 
   }
 ]

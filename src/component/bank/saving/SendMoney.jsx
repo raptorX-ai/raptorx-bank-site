@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import favicon from "../../../assets/favicon.ico";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function SendMoney({ handleSendMoney, addTransaction }) {
   const [amount, setAmount] = useState("");
+  const [receverName, setReceverName] = useState("");
   const [recipientAccountNumber, setRecipientAccountNumber] = useState("");
   const [recipientIFSC, setRecipientIFSC] = useState("");
-  const navigate = useNavigate();
+
+  const handleChangeReceverName = (e) => {
+    setReceverName(e.target.value);
+  };
 
   const handleChangeAmount = (e) => {
     setAmount(e.target.value);
@@ -22,22 +26,7 @@ export default function SendMoney({ handleSendMoney, addTransaction }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleSendMoney(Number(amount), recipientAccountNumber, recipientIFSC);
-
-    addTransaction({
-      type: "Send Money",
-      amount: amount,
-      sender: loggedInUserEmail,
-      receiver: loggedInUserEmail, 
-      balanceBefore: balance,
-      balanceAfter: updatedBalance,
-    });
-
-
-    navigate("/success");
-    setTimeout(() => {
-      navigate("/home");
-    }, 2000);
+    handleSendMoney(receverName, amount, recipientAccountNumber, recipientIFSC);
   };
 
   return (
@@ -61,6 +50,8 @@ export default function SendMoney({ handleSendMoney, addTransaction }) {
                     type="text"
                     className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                     placeholder="Account holder name"
+                    value={receverName}
+                    onChange={handleChangeReceverName}
                   />
                 </div>
               </div>
