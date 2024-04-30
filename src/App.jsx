@@ -35,40 +35,24 @@ function App({}) {
     console.log("Updated transactions:", transactions);
   };
   const navigate = useNavigate();
-  //const currentDate = new Date().toISOString();
 
-  const formatDate = (date) => {
-    const dd = String(date.getDate()).padStart(2, "0");
-    const mm = String(date.getMonth() + 1).padStart(2, "0");
-    const yyyy = date.getFullYear();
-    return dd + ":" + mm + ":" + yyyy;
-  };
+  const now = new Date();
 
-  const formatTime = (date) => {
-    const hours = String(date.getHours()).padStart(2, "0");
-    const minutes = String(date.getMinutes()).padStart(2, "0");
-    return hours + ":" + minutes;
-  };
+  const time = now.toLocaleTimeString('en-US', {hour:'2-digit', minute: '2-digit'});
+  const date = (new Intl.DateTimeFormat('en-US', {dateStyle: 'full'})).format(now);
 
-  const getCurrentDateTime = () => {
-    const currentDate = new Date();
-    const formattedDate = formatDate(currentDate);
-    const formattedTime = formatTime(currentDate);
-    return formattedDate + ", " + formattedTime;
-  };
-
-  const formattedDateTime = getCurrentDateTime();
+  const formattedDateTime = time + ', ' + date;
 
   const inpval = { email: "example@example.com" };
 
   useEffect(() => {
-    const raptorXInstance = new RaptorX({
+    const instance = new RaptorX({
       api_key: "9a60f01e9b7d2d5d37a1b134241311fd7dfdbc38",
     });
 
     const captureLoginEvent = () => {
       if (inpval && inpval.email) {
-        raptorXInstance.capture("email", inpval.email);
+        instance.capture("email", inpval.email);
       }
     };
 
@@ -76,12 +60,13 @@ function App({}) {
 
     const amounts = { grand_total: 100 };
 
-    raptorXInstance.getTransaction({
+    instance.getTransaction({
       user_fullname: inpval.name,
       transactiondate: formattedDateTime,
       status: "complete",
+      bank_card_ecom_indicator: false,
       transactionamount: amounts?.grand_total,
-      user_id: raptorXInstance.retrieveCustomerId(),
+      user_id: instance.retrieveCustomerId(),
     });
   }, [inpval.email]);
 

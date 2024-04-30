@@ -12,13 +12,13 @@ export default function Transaction({email, transactions }) {
       <div className="overflow-x-auto">
         <table className="table-auto w-full border border-collapse border-gray-300 rounded-lg">
           <thead>
-            <tr>
-              <th className="px-4 py-2  border-b font-bold text-left">Date & Time</th>
-              <th className="px-4 py-2  border-b font-bold text-left">Sender</th>
-              <th className="px-4 py-2  border-b font-bold text-left">Receiver</th>
-              <th className="px-4 py-2  border-b font-bold text-left">CR/DB</th>
-              <th className="px-4 py-2  border-b font-bold text-left">Amount</th>
-              <th className="px-4 py-2  border-b font-bold text-left">Current Balance</th>
+            <tr className="">
+              <th className="px-4 py-2  border font-bold text-left">Date & Time</th>
+              <th className="px-4 py-2  border font-bold text-left">Sender</th>
+              <th className="px-4 py-2  border font-bold text-left">Receiver</th>
+              <th className="px-4 py-2  border font-bold text-left">CR/DB</th>
+              <th className="px-4 py-2  border font-bold text-left">Amount</th>
+              <th className="px-4 py-2  border font-bold text-left">Current Balance</th>
             </tr>
           </thead>
 

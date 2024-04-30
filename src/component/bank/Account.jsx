@@ -14,6 +14,7 @@ export default function Account({ }) {
   const handleLogout = () => {
     localStorage.removeItem("loggedInUserEmail");
     navigate('/login');
+    instance.clearSession()
   };
 
   // Prevent going back after logout
