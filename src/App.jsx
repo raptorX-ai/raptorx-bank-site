@@ -44,11 +44,11 @@ function App({}) {
   const formattedDateTime = time + ', ' + date;
 
   const inpval = { email: "example@example.com" };
-
-  useEffect(() => {
-    const instance = new RaptorX({
+  const instance = new RaptorX({
       api_key: "9a60f01e9b7d2d5d37a1b134241311fd7dfdbc38",
     });
+
+  useEffect(() => {
 
     const captureLoginEvent = () => {
       if (inpval && inpval.email) {
@@ -57,18 +57,9 @@ function App({}) {
     };
 
     captureLoginEvent();
-
-    const amounts = { grand_total: 100 };
-
-    instance.getTransaction({
-      user_fullname: inpval.name,
-      transactiondate: formattedDateTime,
-      status: "complete",
-      bank_card_ecom_indicator: false,
-      transactionamount: amounts?.grand_total,
-      user_id: instance.retrieveCustomerId(),
-    });
   }, [inpval.email]);
+
+
 
   useEffect(() => {
     const email = localStorage.getItem("loggedInUserEmail");
@@ -153,6 +144,14 @@ function App({}) {
     );
 
     setUsersData(updatedUsersData);
+    instance.getTransaction({
+      user_fullname: receverName,
+      transactiondate: formattedDateTime,
+      status: "complete",
+      bank_ecom_indicator: "bank",
+      transactionamount: amount,
+      user_id: instance.retrieveCustomerId(),
+    });
     console.log("Updated usersData:", updatedUsersData);
 
     navigate("/success");
@@ -177,7 +176,7 @@ function App({}) {
         <Route path="/signup" element={<SignupPage />} />
         <Route
           path="/login"
-          element={<LoginPage handleLogin={handleLogin} />}
+          element={<LoginPage handleLogin={handleLogin} instance={instance}/>}
         />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route
@@ -199,7 +198,7 @@ function App({}) {
           }
         />
         <Route path="/success" element={<PaymentSuccess />} />
-        <Route path="/account" element={<Account />} />
+        <Route path="/account" element={<Account  instance={instance}/>} />
         <Route
           path="/sendmoney"
           element={
@@ -207,7 +206,10 @@ function App({}) {
               addTransaction={addTransaction}
               loggedInUserEmail={loggedInUserEmail}
               handleSendMoney={handleSendMoney}
+              instance={instance}
             />
+
+      
           }
         />
         <Route path="*" element={<NotFound />} />

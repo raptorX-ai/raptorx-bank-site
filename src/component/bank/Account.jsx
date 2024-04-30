@@ -3,7 +3,7 @@ import SideBar from "../sideBar/SideBar";
 import users from "../core/users.json";
 import { useNavigate } from "react-router-dom";
 
-export default function Account({ }) {
+export default function Account({instance }) {
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [loggedInUserEmail, setLoggedInUserEmail] = useState(null);
   const [isLoading, setIsLoading] = useState(true); 

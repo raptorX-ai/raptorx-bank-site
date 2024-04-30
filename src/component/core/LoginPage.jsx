@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import users from './users.json';
 import RaptorX from 'raptorx.ai';
 
-function LoginPage({ }) {
+function LoginPage({instance }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn') === 'true');
@@ -12,9 +12,7 @@ function LoginPage({ }) {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    const instance = new RaptorX({
-      api_key: '9a60f01e9b7d2d5d37a1b134241311fd7dfdbc38',
-    });
+ 
   
     const user = users.find((user) => user.email === email && user.password === password);
     if (user) {
