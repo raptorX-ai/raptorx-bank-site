@@ -1,41 +1,111 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import SideBar from "../component/sideBar/SideBar";
+import { useMemo } from "react";
+import { MaterialReactTable, useMaterialReactTable } from "material-react-table";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 
-export default function Transaction({email, transactions }) {
-  
+export default function Transaction({ transactions }) {
+  const columns = useMemo(
+    () => [
+      {
+        accessorKey: "date",
+        header: "Date & Time",
+        size: 250,
+      },
+      {
+        accessorKey: "sender",
+        header: "Sender",
+        size: 200,
+      },
+      {
+        accessorKey: "receiver",
+        header: "Receiver",
+        size: 150,
+      },
+      {
+        accessorKey: "type",
+        header: "CR/DB",
+        size: 150,
+      },
+      {
+        accessorKey: "amount",
+        header: "Amount",
+        size: 150,
+      },
+      {
+        accessorKey: "balance",
+        header: "Current Balance",
+        size: 150,
+      },
+    ],
+    []
+  );
+
+  const darkTheme = createTheme({
+    palette: {
+      mode: "dark",
+      fontFamily: "Gilroy-Medium",
+    },
+  });
+
+  const table = useMaterialReactTable({
+    columns,
+    data: transactions,
+    enableColumnResizing: false,
+    enableColumnActions: true,
+    enableRowSelection: false,
+    positionToolbarAlertBanner: "bottom",
+    muiTableProps: {
+      sx: {
+        boxShadow: "none",
+        width: "100%",
+        fontFamily: "Gilroy-Medium",
+        overflowX: "hidden",
+      },
+    },
+    muiTablePaperProps: {
+      sx: {
+        width: "100%",
+        boxShadow: "none",
+        background: "#11171F",
+        borderRadius: "9px",
+        overflowX: "hidden",
+      },
+    },
+    mrtTheme: (theme) => ({
+      baseBackgroundColor: "#11171F",
+      color: "#FFFFFF",
+      fontFamily: "Gilroy-Medium",
+    }),
+    enableRowActions: false,
+    positionActionsColumn: "last",
+    initialState: {
+      showGlobalFilter: false,
+    },
+    positionGlobalFilter: "left",
+  });
 
   return (
     <div className="bg-[#020811] h-screen flex">
       <SideBar />
-      <div className="m-10 text-white">
-      <h2 className="text-xl font-bold mb-4">Transaction History</h2>
-      <div className="overflow-x-auto">
-        <table className="table-auto w-full border border-collapse border-gray-300 rounded-lg">
-          <thead>
-            <tr className="">
-              <th className="px-4 py-2  border font-bold text-left">Date & Time</th>
-              <th className="px-4 py-2  border font-bold text-left">Sender</th>
-              <th className="px-4 py-2  border font-bold text-left">Receiver</th>
-              <th className="px-4 py-2  border font-bold text-left">CR/DB</th>
-              <th className="px-4 py-2  border font-bold text-left">Amount</th>
-              <th className="px-4 py-2  border font-bold text-left">Current Balance</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {transactions.map((transaction, index) => (
-              <tr key={index} className={index % 2 === 0 ? 'bg-gray-500' : ''}>
-                <td className="px-4 py-2 border">{transaction.date}</td>
-                <td className="px-4 py-2 border">{transaction.sender}</td>
-                <td className="px-4 py-2 border">{transaction.receiver}</td>
-                <td className="px-4 py-2 border">{transaction.type}</td>
-                <td className="px-4 py-2 border">{transaction.amount}</td>
-                <td className="px-4 py-2 border">{transaction.balance}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <div className="m-10 overflow-x-auto">
+        <ThemeProvider theme={darkTheme}>
+          <MaterialReactTable
+            table={table}
+            columns={columns}
+            data={transactions}
+            layoutMode="grid"
+            displayColumnDefOptions={{
+              "mrt-row-actions": {
+                size: 100,
+                grow: true,
+              },
+            }}
+            enableRowActions={false}
+            positionActionsColumn="last"
+            mrtTheme={darkTheme}
+          />
+        </ThemeProvider>
       </div>
     </div>
   );

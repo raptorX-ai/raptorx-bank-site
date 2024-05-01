@@ -37,7 +37,7 @@ export default function Balance({ balance }) {
   
   return (
     <>
-      <div className="flex flex-col mt-5 gap-4 h-[100] w-screen">
+      <div className="flex flex-col mt-5 gap-4 h-[120vh] w-screen">
         <Dropdown title="Saving Account">
           <div className="px-4 mx-5 bg-[#020811] text-gray-400">
             <div className="flex p-2 pb-4 ">
@@ -99,7 +99,7 @@ export default function Balance({ balance }) {
           </div>
         </Dropdown>
 
-        <PieChart data={data} />
+        {/* <PieChart data={data} /> */}
       </div>
     </>
   );
