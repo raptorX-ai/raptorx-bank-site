@@ -51,7 +51,7 @@ const SideBar = () => {
               activeClassName="active"
             >
               <FaCreditCard />
-              <span className="text-sm font-medium"> Billing </span>
+              <span className="text-sm font-medium"> Debit Card </span>
             </NavLink>
           </li>
           <li>

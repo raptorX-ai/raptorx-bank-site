@@ -20,6 +20,7 @@ import users from "./component/core/users.json";
 import RaptorX from "raptorx.ai";
 import Setting from "./pages/setting/Setting";
 import Billing from "./pages/billing/Billing";
+import Navbar from "./component/common/Navbar";
 
 function App({}) {
   const [balance, setBalance] = useState(() => {
@@ -176,6 +177,8 @@ function App({}) {
       <Routes>
         <Route path="/" element={<SignupPage />} />
         <Route path="/signup" element={<SignupPage />} />
+        <Route path="" element={<Navbar instance={instance}/>} />
+
         <Route
           path="/login"
           element={<LoginPage handleLogin={handleLogin} instance={instance}/>}

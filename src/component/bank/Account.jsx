@@ -10,13 +10,6 @@ export default function Account({instance }) {
   const [error, setError] = useState(null); 
   const navigate = useNavigate();
 
-  // Logout function
-  const handleLogout = () => {
-    localStorage.removeItem("loggedInUserEmail");
-    navigate('/login');
-    instance.clearSession()
-  };
-
   // Prevent going back after logout
   useEffect(() => {
     const handleBackButton = (event) => {
@@ -53,8 +46,6 @@ export default function Account({instance }) {
         <SideBar />
       </div>
       <div>
-        <button onClick={handleLogout} className="logout-btn text-white m-10 mb-0 bg-[#949697] p-2 px-5 rounded-lg">Logout</button>
-
         {isLoading && (
           <div className="m-10">Loading user data...</div>
         )}

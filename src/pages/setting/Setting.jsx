@@ -25,12 +25,6 @@ const Setting = ({instance }) => {
     setEditMode(!editMode);
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("loggedInUserEmail");
-    navigate('/login');
-    instance.clearSession()
-  };
-
   useEffect(() => {
     const handleBackButton = (event) => {
       event.preventDefault();
@@ -91,9 +85,7 @@ const Setting = ({instance }) => {
                       Account in which you will receive payments
                     </p>
                   </div>
-                  <button className="text-gray-100 bg-[#0F141D] pl-4 pr-4 pt-2 pb-2 rounded-md border border-gray-700" onClick={handleLogout}>
-                    Log Out
-                  </button>
+                  
                 </div>
                 {/* Editable bank details */}
                 <div className="flex flex-col space-y-2">
