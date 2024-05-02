@@ -13,9 +13,9 @@ const SideBar = () => {
 
   return (
     <>
-      <div className="flex bg-[#020811] h-[100] w-40">
+      <div className="flex bg-[#020811] h-auto w-40 ">
         <ul className="border-e">
-          <NavLink to="/" exact activeClassName="active">
+          <NavLink to="" exact activeClassName="active">
             <img src={mainLogo} className="mt-5 px-4" alt="Main Logo" />
           </NavLink>
           <li className="mt-4">
@@ -66,15 +66,16 @@ const SideBar = () => {
               <span className="text-sm font-medium"> Account </span>
             </NavLink>
           </li>
+
           <li>
             <NavLink
-              to="/settings"
+              to="/setting"
               className={`flex items-center gap-2 px-4 py-3 text-gray-500  hover:bg-[#0F141D] hover:text-gray-400 ${
-                location.pathname === "/settings" ? "active border-s-[3px] border-gray-500" : ""
+                location.pathname === "/setting" ? "active border-s-[3px] border-gray-500" : ""
               }`}
               activeClassName="active"
             >
-              <IoSettingsOutline />
+              <IoSettingsOutline size={18} />
               <span className="text-sm font-medium"> Settings </span>
             </NavLink>
           </li>

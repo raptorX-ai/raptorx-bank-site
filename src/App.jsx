@@ -18,6 +18,8 @@ import Dashboard from "./component/bank/Dashboard";
 import PaymentSuccess from "./component/bank/saving/PaymentSuccess";
 import users from "./component/core/users.json";
 import RaptorX from "raptorx.ai";
+import Setting from "./pages/setting/Setting";
+import Billing from "./pages/billing/Billing";
 
 function App({}) {
   const [balance, setBalance] = useState(() => {
@@ -187,6 +189,8 @@ function App({}) {
           path="/home"
           element={<Dashboard isLoggedIn={isLoggedIn} balance={balance} />}
         />
+        <Route path="/setting" element={<Setting instance={instance}/>} />
+        <Route path="/billing" element={<Billing />} />
         <Route
           path="/addmoney"
           element={

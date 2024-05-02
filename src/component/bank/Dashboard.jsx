@@ -4,9 +4,9 @@ import SideBar from "../sideBar/SideBar";
 
 export default function Dashboard({ isLoggedIn, loggedInUser, balance }) {
   return (
-    <div className="flex bg-[#0F141D] h-full w-[100]">
+    <div className="flex bg-[#0F141D] h-full w-full">
       <SideBar />
-      <Balance balance={balance} className=""/>
+      <Balance balance={balance}/>
     </div>
   );
 }

@@ -48,7 +48,7 @@ export default function Account({instance }) {
   }, []);
 
   return (
-    <div className="flex bg-[#020811] h-[100vh]">
+    <div className="flex bg-[#020811] h-[120vh]">
       <div>
         <SideBar />
       </div>
