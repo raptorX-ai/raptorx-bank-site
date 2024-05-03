@@ -44,9 +44,9 @@ const SideBar = () => {
           </li>
           <li>
             <NavLink
-              to="/billing"
+              to="/debitcard"
               className={`flex items-center gap-2 px-4 py-3 text-gray-500  hover:bg-[#0F141D] hover:text-gray-400 ${
-                location.pathname === "/billing" ? "active border-s-[3px] border-gray-500" : ""
+                location.pathname === "/debitcard" ? "active border-s-[3px] border-gray-500" : ""
               }`}
               activeClassName="active"
             >

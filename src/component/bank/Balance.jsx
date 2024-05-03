@@ -39,8 +39,8 @@ export default function Balance({ balance }) {
       <div className="flex flex-col w-screen">
         <Navbar />
         <div className="flex flex-col mt-5 gap-4 h-[120vh]">
-          <Dropdown title="Saving Account">
-            <div className="px-4 mx-5 bg-[#020811] text-gray-400">
+          <Dropdown title="Saving Account" className="">
+            <div className="px-4 mx-10 bg-[#020811] text-gray-400 ">
               <div className="flex p-2 pb-4 ">
                 <LuIndianRupee size={24} />
                 <div className="px-2"> {balance}</div>
@@ -71,12 +71,12 @@ export default function Balance({ balance }) {
             </div>
           </Dropdown>
           <Dropdown title="Credit Card">
-            <div className="px-4 mx-5 bg-[#020811] text-gray-500 pb-5">
+            <div className="px-4 mx-10 bg-[#020811] text-gray-500 pb-5">
               <p>You are not eligible for credit card now</p>
             </div>
           </Dropdown>
           <Dropdown title="Loans">
-            <div className="px-4 mx-5 bg-[#020811] text-gray-500 pb-5">
+            <div className="px-4 mx-10 bg-[#020811] text-gray-500 pb-5">
               <p>Get Instant Loan up to</p>
               <div className="flex p-2 pb-4 items-center">
                 <LuIndianRupee size={24} />

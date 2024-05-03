@@ -29,9 +29,9 @@ function App({}) {
   });
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loggedInUserEmail, setLoggedInUserEmail] = useState(null);
-  const [loggedInUserName, setLoggedInUserName] = useState(null);
   const [usersData, setUsersData] = useState(users);
   const [transactions, setTransactions] = useState([]);
+  //const [loggedInUser, setLoggedInUser] = useState(null);
 
   const addTransaction = (transaction) => {
     setTransactions([...transactions, transaction]);
@@ -66,15 +66,10 @@ function App({}) {
 
   useEffect(() => {
     const email = localStorage.getItem("loggedInUserEmail");
-    const name = localStorage.getItem("loggedInUserName");
     if (email) {
       setIsLoggedIn(true);
       setLoggedInUserEmail(email);
-    }
-    if (name) {
-      setIsLoggedIn(true);
-      setLoggedInUserEmail(name);
-    }
+    } 
   }, []);
 
   const updateBalance = (newBalance) => {
@@ -82,10 +77,9 @@ function App({}) {
     localStorage.setItem("balance", newBalance.toString());
   };
 
-  const handleLogin = ({ email, name }) => {
+  const handleLogin = ({ email }) => {
     setIsLoggedIn(true);
     setLoggedInUserEmail(email);
-    setLoggedInUserName(name);
   };
 
   const handleAddMoney = (amount) => {
@@ -177,7 +171,6 @@ function App({}) {
       <Routes>
         <Route path="/" element={<SignupPage />} />
         <Route path="/signup" element={<SignupPage />} />
-        <Route path="" element={<Navbar instance={instance}/>} />
 
         <Route
           path="/login"
@@ -192,8 +185,8 @@ function App({}) {
           path="/home"
           element={<Dashboard isLoggedIn={isLoggedIn} balance={balance} />}
         />
-        <Route path="/setting" element={<Setting instance={instance}/>} />
-        <Route path="/billing" element={<Billing />} />
+        <Route path="/setting" element={<Setting instance={instance}  />} />
+        <Route path="/debitcard" element={<Billing />} />
         <Route
           path="/addmoney"
           element={

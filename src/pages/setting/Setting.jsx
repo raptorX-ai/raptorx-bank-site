@@ -3,6 +3,7 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import React, { useState, useEffect } from "react";
 import users from "../../component/core/users.json";
 import { useNavigate } from "react-router-dom";
+import Navbar from '../../component/common/Navbar'
 
 const Setting = ({instance }) => {
   const [expandedDropdown, setExpandedDropdown] = useState(null);
@@ -12,6 +13,8 @@ const Setting = ({instance }) => {
   const [isLoading, setIsLoading] = useState(true); 
   const [error, setError] = useState(null); 
   const navigate = useNavigate();
+
+  const greeting = "Hello!"
 
   const toggleDropdown = (dropdownName) => {
     if (expandedDropdown === dropdownName) {
@@ -56,9 +59,11 @@ const Setting = ({instance }) => {
 
   return (
     <>
-      <div className="flex h-[120vh]">
+      <div className="flex bg-[#0F141D]">
         <SideBar />
-        <div className="flex flex-col space-y-4 bg-[#0F141D] w-full p-7 text-gray-400 ">
+        <div className="flex flex-col w-full m-1">
+          <Navbar loggedInUserName={loggedInUser ? loggedInUser.name : ""} greeting={greeting}/>
+          <div className="flex flex-col space-y-4 bg-[#0F141D] w-full h-[120vh] p-10 text-gray-400 ">
           <h1 className="text-2xl font-semibold">Settings</h1>
 
           <div className="flex flex-col bg-[#020811] space-y-4 border-solid border-[1px] pr-5 pl-5 pt-5 pb-5 rounded-md border-gray-800">
@@ -196,6 +201,7 @@ const Setting = ({instance }) => {
           </div>
 
           
+        </div>
         </div>
       </div>
     </>

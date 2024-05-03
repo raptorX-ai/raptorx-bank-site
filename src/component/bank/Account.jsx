@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import SideBar from "../sideBar/SideBar";
 import users from "../core/users.json";
 import { useNavigate } from "react-router-dom";
+import Navbar from '../common/Navbar'
 
 export default function Account({instance }) {
   const [loggedInUser, setLoggedInUser] = useState(null);
@@ -41,11 +42,12 @@ export default function Account({instance }) {
   }, []);
 
   return (
-    <div className="flex bg-[#020811] h-[120vh]">
-      <div>
+    <div className="flex bg-[#0F141D] h-[120vh]">
+      <div className="flex h-full">
         <SideBar />
       </div>
-      <div>
+      <div className="w-full">
+        <Navbar/>
         {isLoading && (
           <div className="m-10">Loading user data...</div>
         )}
@@ -53,7 +55,7 @@ export default function Account({instance }) {
           <div className="m-10 text-red-500">{error}</div>
         )}
         {!isLoading && !error && (
-          <div className="m-10 w-full border border-gray-700 rounded-lg">
+          <div className="m-10 border border-gray-700 rounded-lg">
             <div className="flow-root bg-[#020811] text-white border-white">
               <div className="divide-y divide-gray-700 text-sm">
                 <div className="px-3 grid grid-cols-1 gap-1 py-3 even:bg-gray-700 sm:grid-cols-3 sm:gap-4">

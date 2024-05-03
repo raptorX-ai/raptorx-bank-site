@@ -24,7 +24,7 @@ function Dropdown({ title, children }) {
   return (
     <div className="dropdown" id={title} onClick={() => { toggleDropdown(); closeDropdowns(); }}>
       <div className="flex">
-        <button className="w-full md:w-85vw bg-[#020811] text-gray-400 py-5 px-4 mx-5 flex justify-between">
+        <button className="w-full md:w-85vw bg-[#020811] text-gray-400 py-5 px-5 mx-10 flex justify-between ">
             {title}
             <MdArrowDropDown size={30}/>
         </button>
