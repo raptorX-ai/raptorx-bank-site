@@ -89,18 +89,25 @@ function App({}) {
     setTimeout(() => {
       navigate("/home");
     }, 2000);
-    addTransaction({
+
+    const transaction = {
       date: formattedDateTime,
       type: "Credited",
       amount: amount,
       sender: loggedInUserEmail,
       receiver: "Self",
       balance: updatedBalance,
-    });
+    };
+  
+    const existingTransactions = JSON.parse(localStorage.getItem("transactions")) || [];
+    const updatedTransactions = [...existingTransactions, transaction];
+    localStorage.setItem("transactions", JSON.stringify(updatedTransactions));
+    addTransaction(transaction);
   };
+  
 
   const handleSendMoney = (
-    receverName,
+    receiverName,
     amount,
     recipientAccountNumber,
     recipientIFSC
@@ -109,21 +116,21 @@ function App({}) {
       alert("Insufficient balance");
       return;
     }
-
+  
     const updatedSenderBalance = balance - amount;
     updateBalance(updatedSenderBalance);
-
+  
     const recipientIndex = usersData.findIndex(
       (user) =>
         user.accountNumber === recipientAccountNumber &&
         user.ifscCode === recipientIFSC
     );
-
+  
     if (recipientIndex === -1) {
       alert("Recipient account not found");
       return;
     }
-
+  
     const updatedUsersData = [...usersData];
     const recipientBalance = parseFloat(
       updatedUsersData[recipientIndex].balance
@@ -139,10 +146,10 @@ function App({}) {
       "Recipient Balance After Update:",
       updatedUsersData[recipientIndex].balance
     );
-
+  
     setUsersData(updatedUsersData);
     instance.getTransaction({
-      user_fullname: receverName,
+      user_fullname: receiverName,
       transactiondate: formattedDateTime,
       status: "complete",
       bank_ecom_indicator: "bank",
@@ -150,21 +157,28 @@ function App({}) {
       user_id: instance.retrieveCustomerId(),
     });
     console.log("Updated usersData:", updatedUsersData);
-
+  
     navigate("/success");
     setTimeout(() => {
       navigate("/home");
     }, 2000);
-
-    addTransaction({
+  
+    const transaction = {
       date: formattedDateTime,
       type: "Debited",
       amount: amount,
       sender: loggedInUserEmail,
-      receiver: [receverName, ": ", recipientAccountNumber],
+      receiver: [receiverName, ": ", recipientAccountNumber],
       balance: updatedSenderBalance,
-    });
+    };
+  
+    const existingTransactions = JSON.parse(localStorage.getItem("transactions")) || [];
+    const updatedTransactions = [...existingTransactions, transaction];
+    localStorage.setItem("transactions", JSON.stringify(updatedTransactions));
+  
+    addTransaction(transaction);
   };
+  
 
   return (
     <>
@@ -179,7 +193,7 @@ function App({}) {
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route
           path="/transactions"
-          element={<Transaction transactions={transactions} />}
+          element={<Transaction loggedInUserEmail={loggedInUserEmail} transactions={transactions} />}
         />
         <Route
           path="/home"
@@ -208,8 +222,6 @@ function App({}) {
               handleSendMoney={handleSendMoney}
               instance={instance}
             />
-
-      
           }
         />
         <Route path="*" element={<NotFound />} />

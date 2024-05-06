@@ -1,11 +1,26 @@
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import SideBar from "../component/sideBar/SideBar";
-import { useMemo } from "react";
-import Navbar from '../component/common/Navbar'
+import Navbar from '../component/common/Navbar';
 import { MaterialReactTable, useMaterialReactTable } from "material-react-table";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
-export default function Transaction({ transactions }) {
+export default function Transaction({ loggedInUserEmail }) {
+  const [userTransactions, setUserTransactions] = useState([]);
+  const [transactions, setTransactions] = useState([]);
+  const [balance, setBalance] = useState(null);
+
+  useEffect(() => {
+    const storedTransactions = JSON.parse(localStorage.getItem("transactions")) || [];
+    setTransactions(storedTransactions);
+  }, []);
+
+  useEffect(() => {
+    const filteredTransactions = transactions.filter(transaction =>
+      transaction.sender === loggedInUserEmail || transaction.receiver === loggedInUserEmail
+    );
+    setUserTransactions(filteredTransactions);
+  }, [loggedInUserEmail, transactions]);
+
   const columns = useMemo(
     () => [
       {
@@ -51,7 +66,7 @@ export default function Transaction({ transactions }) {
 
   const table = useMaterialReactTable({
     columns,
-    data: transactions,
+    data: userTransactions,
     enableColumnResizing: false,
     enableColumnActions: true,
     enableRowSelection: false,
@@ -95,7 +110,7 @@ export default function Transaction({ transactions }) {
             <MaterialReactTable
               table={table}
               columns={columns}
-              data={transactions}
+              data={userTransactions}
               layoutMode="grid"
               displayColumnDefOptions={{
                 "mrt-row-actions": {

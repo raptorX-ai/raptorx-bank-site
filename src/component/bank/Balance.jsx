@@ -9,27 +9,27 @@ import AddMoney from "./saving/AddMoney";
 import { BiTransfer } from "react-icons/bi";
 import Navbar from "../common/Navbar";
 
-const data = {
-  labels: ["Food", "Travel", "Miscellaneous", "Medical"],
-  datasets: [
-    {
-      data: [300, 150, 200, 100],
-      backgroundColor: [
-        "rgba(255, 99, 132, 0.5)", // Red for food
-        "rgba(54, 162, 235, 0.5)", // Blue for travel
-        "rgba(255, 206, 86, 0.5)", // Yellow for miscellaneous
-        "rgba(75, 192, 192, 0.5)", // Green for medical
-      ],
-      borderColor: [
-        "rgba(255, 99, 132, 1)",
-        "rgba(54, 162, 235, 1)",
-        "rgba(255, 206, 86, 1)",
-        "rgba(75, 192, 192, 1)",
-      ],
-      borderWidth: 1,
-    },
-  ],
-};
+// const data = {
+//   labels: ["Food", "Travel", "Miscellaneous", "Medical"],
+//   datasets: [
+//     {
+//       data: [300, 150, 200, 100],
+//       backgroundColor: [
+//         "rgba(255, 99, 132, 0.5)", // Red for food
+//         "rgba(54, 162, 235, 0.5)", // Blue for travel
+//         "rgba(255, 206, 86, 0.5)", // Yellow for miscellaneous
+//         "rgba(75, 192, 192, 0.5)", // Green for medical
+//       ],
+//       borderColor: [
+//         "rgba(255, 99, 132, 1)",
+//         "rgba(54, 162, 235, 1)",
+//         "rgba(255, 206, 86, 1)",
+//         "rgba(75, 192, 192, 1)",
+//       ],
+//       borderWidth: 1,
+//     },
+//   ],
+// };
 
 export default function Balance({ balance }) {
   console.log("Current balance:", balance);
