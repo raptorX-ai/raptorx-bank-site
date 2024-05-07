@@ -31,13 +31,13 @@ import Navbar from "../common/Navbar";
 //   ],
 // };
 
-export default function Balance({ balance }) {
+export default function Balance({ balance,instance }) {
   console.log("Current balance:", balance);
 
   return (
     <>
       <div className="flex flex-col w-screen">
-        <Navbar />
+        <Navbar  instance={instance}/>
         <div className="flex flex-col mt-5 gap-4 h-[120vh]">
           <Dropdown title="Saving Account" className="">
             <div className="px-4 mx-10 bg-[#020811] text-gray-400 ">

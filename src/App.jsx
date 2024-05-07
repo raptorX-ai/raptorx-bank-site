@@ -31,7 +31,8 @@ function App({}) {
   const [loggedInUserEmail, setLoggedInUserEmail] = useState(null);
   const [usersData, setUsersData] = useState(users);
   const [transactions, setTransactions] = useState([]);
-  //const [loggedInUser, setLoggedInUser] = useState(null);
+  const [loggedInUser, setLoggedInUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true); 
 
   const addTransaction = (transaction) => {
     setTransactions([...transactions, transaction]);
@@ -72,6 +73,7 @@ function App({}) {
     } 
   }, []);
 
+
   const updateBalance = (newBalance) => {
     setBalance(newBalance);
     localStorage.setItem("balance", newBalance.toString());
@@ -81,6 +83,22 @@ function App({}) {
     setIsLoggedIn(true);
     setLoggedInUserEmail(email);
   };
+  useEffect(() => {
+    const email = localStorage.getItem("loggedInUserEmail");
+    console.log("Logged-in user email:", email);
+    setLoggedInUserEmail(email);
+
+    if (email) {
+      const user = users.find(user => user.email === email);
+      if (user) {
+        setLoggedInUser(user);
+      } else {
+        setError("User not found"); 
+      }
+    }
+
+    setIsLoading(false); 
+  }, []);
 
   const handleAddMoney = (amount) => {
     const updatedBalance = balance + amount;
@@ -149,7 +167,9 @@ function App({}) {
   
     setUsersData(updatedUsersData);
     instance.getTransaction({
-      user_fullname: receiverName,
+      user_fullname: loggedInUser.name,
+      from_account:loggedInUser.accountNumber,
+      to_account: recipientAccountNumber,
       transactiondate: formattedDateTime,
       status: "complete",
       bank_ecom_indicator: "bank",
@@ -193,14 +213,14 @@ function App({}) {
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route
           path="/transactions"
-          element={<Transaction loggedInUserEmail={loggedInUserEmail} transactions={transactions} />}
+          element={<Transaction loggedInUserEmail={loggedInUserEmail} transactions={transactions} instance={instance} />}
         />
         <Route
           path="/home"
-          element={<Dashboard isLoggedIn={isLoggedIn} balance={balance} />}
+          element={<Dashboard isLoggedIn={isLoggedIn} balance={balance} instance={instance}/>}
         />
         <Route path="/setting" element={<Setting instance={instance}  />} />
-        <Route path="/debitcard" element={<Billing />} />
+        <Route path="/debitcard" element={<Billing  instance={instance}/>} />
         <Route
           path="/addmoney"
           element={

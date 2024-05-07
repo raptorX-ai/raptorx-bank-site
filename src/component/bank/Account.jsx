@@ -10,6 +10,7 @@ export default function Account({instance }) {
   const [isLoading, setIsLoading] = useState(true); 
   const [error, setError] = useState(null); 
   const navigate = useNavigate();
+ 
 
   // Prevent going back after logout
   useEffect(() => {
@@ -30,7 +31,7 @@ export default function Account({instance }) {
     setLoggedInUserEmail(email);
 
     if (email) {
-      const user = users.find(user => user.email === email);
+      const user = users.find(user => user?.email === email);
       if (user) {
         setLoggedInUser(user);
       } else {
@@ -47,7 +48,7 @@ export default function Account({instance }) {
         <SideBar />
       </div>
       <div className="w-full">
-        <Navbar/>
+        <Navbar instance={instance}/>
         {isLoading && (
           <div className="m-10">Loading user data...</div>
         )}
