@@ -4,6 +4,7 @@ import { MdAccountCircle } from "react-icons/md";
 import { FaCreditCard } from "react-icons/fa6";
 import { IoHomeOutline, IoSettingsOutline } from "react-icons/io5";
 import { GrTransaction } from "react-icons/gr";
+import { IoIosAdd } from "react-icons/io";
 
 import mainLogo from "../../assets/mainLogo.svg";
 import Logo from "../../assets/favicon.ico";
@@ -54,6 +55,7 @@ const SideBar = () => {
               <span className="text-sm font-medium"> Debit Card </span>
             </NavLink>
           </li>
+
           <li>
             <NavLink
               to="/account"

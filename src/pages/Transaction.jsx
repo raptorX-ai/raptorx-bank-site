@@ -7,7 +7,6 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 export default function Transaction({ loggedInUserEmail }) {
   const [userTransactions, setUserTransactions] = useState([]);
   const [transactions, setTransactions] = useState([]);
-  const [balance, setBalance] = useState(null);
 
   useEffect(() => {
     const storedTransactions = JSON.parse(localStorage.getItem("transactions")) || [];

@@ -3,24 +3,32 @@
     "email": "anujkumaryadav.in@gmail.com",
     "password": "anuj",
     "name": "Anujkumar Yadav",
+    "accountNumber": "12345678",
+    "ifscCode": "SBI123",
+    "balance": 15000
+  },
+  {
+    "email": "sweta@gmail.com",
+    "password": "sweta",
+    "name": "Sweta",
     "accountNumber": "123456789",
-    "ifscCode": "ABC123",
-    "balance": 10000
+    "ifscCode": "SBI123",
+    "balance": 35000
   },
   {
     "email": "pratyusha@gmail.com",
     "password": "zxcv",
     "name": "Pratyusha Vemur",
     "accountNumber": "987654321",
-    "ifscCode": "XYZ123",
-    "balance": 11000
+    "ifscCode": "SBI123",
+    "balance": 25000
   },
   {
     "email": "jitendra@gmail.com",
     "password": "qwer",
     "name": "Jitendra Chaudhari",
     "accountNumber": "456789123",
-    "ifscCode": "ZXC123",
-    "balance": 12000 
+    "ifscCode": "SBI123",
+    "balance": 30000 
   }
 ]
