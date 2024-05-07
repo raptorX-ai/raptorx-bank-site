@@ -154,6 +154,7 @@ function App({}) {
       bank_ecom_indicator: "bank",
       transactionamount: amount,
       transactioncurrency: "INR",
+      transaction_medium:"web",
       user_id: instance.retrieveCustomerId(),
     });
   
