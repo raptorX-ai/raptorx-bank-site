@@ -126,6 +126,7 @@ function App({}) {
 
   const handleSendMoney = (
     receiverName,
+    recipientAccountNumber,
     amount,
   ) => {
     if (balance < amount) {
@@ -148,13 +149,15 @@ function App({}) {
     instance.getTransaction({
       user_fullname: loggedInUser.name,
       from_account: loggedInUser.accountNumber,
-      to_account: "", // You can leave it empty since we're not checking recipient account number
+      to_account: "", 
       transactiondate: currentDate,
       status: "complete",
       bank_ecom_indicator: "bank",
       transactionamount: amount,
       transactioncurrency: "INR",
       transaction_medium:"web",
+      bank_beneficiary_name:receiverName,
+      bank_beneficiary_account_no:recipientAccountNumber,
       user_id: instance.retrieveCustomerId(),
     });
   
