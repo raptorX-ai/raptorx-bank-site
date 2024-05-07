@@ -20,6 +20,7 @@ import users from "./component/core/users.json";
 import RaptorX from "raptorx.ai";
 import Setting from "./pages/setting/Setting";
 import Billing from "./pages/billing/Billing";
+import AddBeneficary from './pages/beneficiary/AddBeneficiary'
 import Navbar from "./component/common/Navbar";
 
 function App({}) {
@@ -222,7 +223,9 @@ function App({}) {
           element={<Dashboard isLoggedIn={isLoggedIn} balance={balance} instance={instance}/>}
         />
         <Route path="/setting" element={<Setting instance={instance}  />} />
-        <Route path="/debitcard" element={<Billing  instance={instance}/>} />
+        <Route path="/debitcard" element={<Billing />} />
+        <Route path="/addbeneficiary" element={<AddBeneficary instance={instance}  />} />
+        
         <Route
           path="/addmoney"
           element={

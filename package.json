@@ -16,6 +16,7 @@
     "@mui/material": "^5.15.15",
     "chart.js": "^4.4.2",
     "chartjs-adapter-date-fns": "^3.0.0",
+    "fs": "^0.0.1-security",
     "material-react-table": "^2.12.1",
     "raptorx.ai": "^1.2.7",
     "react": "^18.2.0",

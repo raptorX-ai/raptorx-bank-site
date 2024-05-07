@@ -5,7 +5,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 export default function Navbar({ loggedInUserName, greeting,instance }) {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
-  console.log('nav',instance)
+  console.log(instance)
   
   const handleLogout = () => {
 
