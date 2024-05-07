@@ -123,13 +123,10 @@ function App({}) {
     localStorage.setItem("transactions", JSON.stringify(updatedTransactions));
     addTransaction(transaction);
   };
-  
 
   const handleSendMoney = (
     receiverName,
     amount,
-    recipientAccountNumber,
-    recipientIFSC
   ) => {
     if (balance < amount) {
       alert("Insufficient balance");
@@ -139,47 +136,26 @@ function App({}) {
     const updatedSenderBalance = balance - amount;
     updateBalance(updatedSenderBalance);
   
-    const recipientIndex = usersData.findIndex(
-      (user) =>
-        user.accountNumber === recipientAccountNumber &&
-        user.ifscCode === recipientIFSC
-    );
-  
-    if (recipientIndex === -1) {
-      alert("Recipient account not found");
-      return;
-    }
-  
-    const updatedUsersData = [...usersData];
-    const recipientBalance = parseFloat(
-      updatedUsersData[recipientIndex].balance
-    );
-    console.log("Recipient Balance Before Update:", recipientBalance);
-    if (!isNaN(recipientBalance)) {
-      updatedUsersData[recipientIndex].balance =
-        recipientBalance + parseFloat(amount);
-    } else {
-      updatedUsersData[recipientIndex].balance = parseFloat(amount);
-    }
-    console.log(
-      "Recipient Balance After Update:",
-      updatedUsersData[recipientIndex].balance
-    );
+    const updatedUsersData = usersData.map(user => {
+      const updatedUser = { ...user };
+      updatedUser.balance = parseFloat(updatedUser.balance) + parseFloat(amount);
+      return updatedUser;
+    });
   
     setUsersData(updatedUsersData);
+  
     const currentDate = new Date().toISOString();
     instance.getTransaction({
       user_fullname: loggedInUser.name,
-      from_account:loggedInUser.accountNumber,
-      to_account: recipientAccountNumber,
+      from_account: loggedInUser.accountNumber,
+      to_account: "", // You can leave it empty since we're not checking recipient account number
       transactiondate: currentDate,
       status: "complete",
       bank_ecom_indicator: "bank",
       transactionamount: amount,
-      transactioncurrency:"INR",
+      transactioncurrency: "INR",
       user_id: instance.retrieveCustomerId(),
     });
-    console.log("Updated usersData:", updatedUsersData);
   
     navigate("/success");
     setTimeout(() => {
@@ -191,7 +167,7 @@ function App({}) {
       type: "Debited",
       amount: amount,
       sender: loggedInUserEmail,
-      receiver: [receiverName, ": ", recipientAccountNumber],
+      receiver: receiverName, // Removed recipient account number from receiver field
       balance: updatedSenderBalance,
     };
   
@@ -201,6 +177,86 @@ function App({}) {
   
     addTransaction(transaction);
   };
+  
+  
+
+  // const handleSendMoney = (
+  //   receiverName,
+  //   amount,
+  //   recipientAccountNumber,
+  //   recipientIFSC
+  // ) => {
+  //   if (balance < amount) {
+  //     alert("Insufficient balance");
+  //     return;
+  //   }
+  
+  //   const updatedSenderBalance = balance - amount;
+  //   updateBalance(updatedSenderBalance);
+  
+  //   const recipientIndex = usersData.findIndex(
+  //     (user) =>
+  //       user.accountNumber === recipientAccountNumber &&
+  //       user.ifscCode === recipientIFSC
+  //   );
+
+  
+  //   if (recipientIndex === -1) {
+  //     alert("Recipient account not found");
+  //     return;
+  //   }
+  
+  //   const updatedUsersData = [...usersData];
+  //   const recipientBalance = parseFloat(
+  //     updatedUsersData[recipientIndex].balance
+  //   );
+  //   console.log("Recipient Balance Before Update:", recipientBalance);
+  //   if (!isNaN(recipientBalance)) {
+  //     updatedUsersData[recipientIndex].balance =
+  //       recipientBalance + parseFloat(amount);
+  //   } else {
+  //     updatedUsersData[recipientIndex].balance = parseFloat(amount);
+  //   }
+  //   console.log(
+  //     "Recipient Balance After Update:",
+  //     updatedUsersData[recipientIndex].balance
+  //   );
+  
+  //   setUsersData(updatedUsersData);
+  //   const currentDate = new Date().toISOString();
+  //   instance.getTransaction({
+  //     user_fullname: loggedInUser.name,
+  //     from_account:loggedInUser.accountNumber,
+  //     to_account: recipientAccountNumber,
+  //     transactiondate: currentDate,
+  //     status: "complete",
+  //     bank_ecom_indicator: "bank",
+  //     transactionamount: amount,
+  //     transactioncurrency:"INR",
+  //     user_id: instance.retrieveCustomerId(),
+  //   });
+  //   console.log("Updated usersData:", updatedUsersData);
+  
+  //   navigate("/success");
+  //   setTimeout(() => {
+  //     navigate("/home");
+  //   }, 2000);
+  
+  //   const transaction = {
+  //     date: formattedDateTime,
+  //     type: "Debited",
+  //     amount: amount,
+  //     sender: loggedInUserEmail,
+  //     receiver: [receiverName, ": ", recipientAccountNumber],
+  //     balance: updatedSenderBalance,
+  //   };
+  
+  //   const existingTransactions = JSON.parse(localStorage.getItem("transactions")) || [];
+  //   const updatedTransactions = [...existingTransactions, transaction];
+  //   localStorage.setItem("transactions", JSON.stringify(updatedTransactions));
+  
+  //   addTransaction(transaction);
+  // };
   
 
   return (
