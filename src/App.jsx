@@ -166,14 +166,16 @@ function App({}) {
     );
   
     setUsersData(updatedUsersData);
+    const currentDate = new Date().toISOString();
     instance.getTransaction({
       user_fullname: loggedInUser.name,
       from_account:loggedInUser.accountNumber,
       to_account: recipientAccountNumber,
-      transactiondate: formattedDateTime,
+      transactiondate: currentDate,
       status: "complete",
       bank_ecom_indicator: "bank",
       transactionamount: amount,
+      transactioncurrency:"INR",
       user_id: instance.retrieveCustomerId(),
     });
     console.log("Updated usersData:", updatedUsersData);
