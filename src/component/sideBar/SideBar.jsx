@@ -4,7 +4,7 @@ import { MdAccountCircle } from "react-icons/md";
 import { FaCreditCard } from "react-icons/fa6";
 import { IoHomeOutline, IoSettingsOutline } from "react-icons/io5";
 import { GrTransaction } from "react-icons/gr";
-import { IoIosAdd } from "react-icons/io";
+import { IoMdPersonAdd } from "react-icons/io";
 
 import mainLogo from "../../assets/mainLogo.svg";
 import Logo from "../../assets/favicon.ico";
@@ -53,6 +53,19 @@ const SideBar = () => {
             >
               <FaCreditCard />
               <span className="text-sm font-medium"> Debit Card </span>
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
+              to="/addbeneficiary"
+              className={`flex items-center gap-2 px-4 py-3 text-gray-500  hover:bg-[#0F141D] hover:text-gray-400 ${
+                location.pathname === "/addbeneficiary" ? "active border-s-[3px] border-gray-500" : ""
+              }`}
+              activeClassName="active"
+            >
+              <IoMdPersonAdd />
+              <span className="text-sm font-medium"> Add Beneficary </span>
             </NavLink>
           </li>
 
