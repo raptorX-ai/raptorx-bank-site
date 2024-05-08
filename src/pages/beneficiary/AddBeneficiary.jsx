@@ -1,23 +1,18 @@
-import React from 'react'
-import SideBar from '../../component/sideBar/SideBar'
+import React from 'react';
 import BeneficiaryForm from './BeneficiaryForm';
-import Navbar from '../../component/common/Navbar';
 
-const AddBeneficiary = ({instance}) => {
+const AddBeneficiary = ({ instance }) => {
   return (
-    <>
-      <div className="flex bg-[#0F141D] h-screen w-screen">
-        <SideBar />
-        <div className="flex flex-col w-full m-1">
-        <Navbar instance={instance}/>
-        <div className=''>
-          <BeneficiaryForm />
+    <div className="flex bg-[#0F141D] min-h-screen w-full">     
+      <div className="flex flex-col w-full">
+        <div className="flex justify-center mt-8">
+          <div className="max-w-md mx-auto">
+            <BeneficiaryForm />
+          </div>
         </div>
-        </div>
-        
+      </div>
     </div>
-    </>
-  )
-}
+  );
+};
 
-export default AddBeneficiary
+export default AddBeneficiary;

@@ -1,6 +1,4 @@
 import React, { useEffect, useMemo, useState } from "react";
-import SideBar from "../component/sideBar/SideBar";
-import Navbar from '../component/common/Navbar';
 import { MaterialReactTable, useMaterialReactTable } from "material-react-table";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
@@ -101,9 +99,8 @@ export default function Transaction({ loggedInUserEmail,instance }) {
 
   return (
     <div className="bg-[#0F141D] w-full min-h-screen flex flex-col md:flex-row">
-      <SideBar />
       <div className="flex flex-col w-full">
-        <Navbar  instance={instance}/>
+       
         <div className="m-8 flex-grow overflow-x-auto">
           <ThemeProvider theme={darkTheme}>
             <MaterialReactTable

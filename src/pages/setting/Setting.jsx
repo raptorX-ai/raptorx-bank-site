@@ -1,4 +1,3 @@
-import SideBar from "../../component/sideBar/SideBar";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import React, { useState, useEffect } from "react";
 import users from "../../component/core/users.json";
@@ -59,10 +58,9 @@ const Setting = ({instance }) => {
 
   return (
     <>
-      <div className="flex bg-[#0F141D]">
-        <SideBar />
+      <div className="flex bg-[#0F141D] w-full">
         <div className="flex flex-col w-full m-1">
-          <Navbar instance={instance} loggedInUserName={loggedInUser ? loggedInUser.name : ""} greeting={greeting}/>
+          {/* <Navbar instance={instance} loggedInUserName={loggedInUser ? loggedInUser.name : ""} greeting={greeting}/> */}
           <div className="flex flex-col space-y-4 bg-[#0F141D] w-full h-[120vh] p-10 text-gray-400 ">
           <h1 className="text-2xl font-semibold">Settings</h1>
 

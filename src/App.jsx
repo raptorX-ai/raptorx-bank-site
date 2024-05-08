@@ -22,6 +22,7 @@ import Setting from "./pages/setting/Setting";
 import Billing from "./pages/billing/Billing";
 import AddBeneficary from './pages/beneficiary/AddBeneficiary'
 import Navbar from "./component/common/Navbar";
+import SideBar from "./component/sideBar/SideBar";
 
 function App({}) {
   const [balance, setBalance] = useState(() => {
@@ -64,6 +65,7 @@ function App({}) {
     captureLoginEvent();
   }, [inpval.email]);
 
+  const excludeNavbarSidebarRoutes = ['/addmoney', '/sendmoney', '/login', '/success', '/'];
 
 
   useEffect(() => {
@@ -248,54 +250,62 @@ function App({}) {
   
 
   return (
-    <>
-      <Routes>
-        <Route path="/" element={<SignupPage />} />
-        <Route path="/signup" element={<SignupPage />} />
+    <div className="flex w-full h-full">
+      {/* <SideBar/> */}
+      {excludeNavbarSidebarRoutes.includes(location.pathname) ? null : <SideBar />}
+      <div className="bg-[#0F141D] w-full">
+        {/* <Navbar instance={instance}/> */}
+        {excludeNavbarSidebarRoutes.includes(location.pathname) ? null : <Navbar instance={instance}/>}
+        <div>
+          <Routes>
+            <Route path="/" element={<SignupPage />} />
+            <Route path="/signup" element={<SignupPage />} />
 
-        <Route
-          path="/login"
-          element={<LoginPage handleLogin={handleLogin} instance={instance}/>}
-        />
-        <Route path="/forgotpassword" element={<ForgotPassword />} />
-        <Route
-          path="/transactions"
-          element={<Transaction loggedInUserEmail={loggedInUserEmail} transactions={transactions} instance={instance} />}
-        />
-        <Route
-          path="/home"
-          element={<Dashboard isLoggedIn={isLoggedIn} balance={balance} instance={instance}/>}
-        />
-        <Route path="/setting" element={<Setting instance={instance}  />} />
-        <Route path="/debitcard" element={<Billing />} />
-        <Route path="/addbeneficiary" element={<AddBeneficary instance={instance}  />} />
-        
-        <Route
-          path="/addmoney"
-          element={
-            <AddMoney
-              loggedInUserEmail={loggedInUserEmail}
-              handleAddMoney={handleAddMoney}
-              addTransaction={addTransaction}
+            <Route
+              path="/login"
+              element={<LoginPage handleLogin={handleLogin} instance={instance}/>}
             />
-          }
-        />
-        <Route path="/success" element={<PaymentSuccess />} />
-        <Route path="/account" element={<Account  instance={instance}/>} />
-        <Route
-          path="/sendmoney"
-          element={
-            <SendMoney
-              addTransaction={addTransaction}
-              loggedInUserEmail={loggedInUserEmail}
-              handleSendMoney={handleSendMoney}
-              instance={instance}
+            <Route path="/forgotpassword" element={<ForgotPassword />} />
+            <Route
+              path="/transactions"
+              element={<Transaction loggedInUserEmail={loggedInUserEmail} transactions={transactions} instance={instance} />}
             />
-          }
-        />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </>
+            <Route
+              path="/home"
+              element={<Dashboard isLoggedIn={isLoggedIn} balance={balance} instance={instance}/>}
+            />
+            <Route path="/setting" element={<Setting instance={instance}  />} />
+            <Route path="/debitcard" element={<Billing />} />
+            <Route path="/addbeneficiary" element={<AddBeneficary instance={instance}  />} />
+            
+            <Route
+              path="/addmoney"
+              element={
+                <AddMoney
+                  loggedInUserEmail={loggedInUserEmail}
+                  handleAddMoney={handleAddMoney}
+                  addTransaction={addTransaction}
+                />
+              }
+            />
+            <Route path="/success" element={<PaymentSuccess />} />
+            <Route path="/account" element={<Account  instance={instance}/>} />
+            <Route
+              path="/sendmoney"
+              element={
+                <SendMoney
+                  addTransaction={addTransaction}
+                  loggedInUserEmail={loggedInUserEmail}
+                  handleSendMoney={handleSendMoney}
+                  instance={instance}
+                />
+              }
+            />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </div>
+      </div>
+    </div>
   );
 }
 

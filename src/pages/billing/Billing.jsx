@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import SideBar from "../../component/sideBar/SideBar";
-import Navbar from "../../component/common/Navbar";
 
 function Billing({instance}) {
   const [cardNumber, setCardNumber] = useState("");
@@ -30,10 +28,10 @@ function Billing({instance}) {
 
   return (
     <>
-      <div className="flex h-[120vh] bg-[#0F141D]">
-        <SideBar />
+      <div className="flex h-[120vh] bg-[#0F141D] w-full">
+        
         <div className="flex flex-col w-full m-1">
-          <Navbar  instance={instance}/>
+          
           <div className="flex justify-center items-center p-4 ">
             <div className="flex flex-col items-center mt-10 space-y-8 md:flex-row md:space-x-8 md:space-y-0 md:justify-center">
               <div className="relative flex flex-col items-center justify-center w-[300px] h-[200px] md:w-[400px] md:h-[250px] bg-gray-900 rounded-lg overflow-hidden shadow-lg">

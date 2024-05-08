@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
-import SideBar from "../sideBar/SideBar";
 import users from "../core/users.json";
 import { useNavigate } from "react-router-dom";
-import Navbar from '../common/Navbar'
 
 export default function Account({instance }) {
   const [loggedInUser, setLoggedInUser] = useState(null);
@@ -43,12 +41,9 @@ export default function Account({instance }) {
   }, []);
 
   return (
-    <div className="flex bg-[#0F141D] h-[120vh]">
-      <div className="flex h-full">
-        <SideBar />
-      </div>
+    <div className="flex bg-[#0F141D] h-screen w-full">
+      
       <div className="w-full">
-        <Navbar instance={instance}/>
         {isLoading && (
           <div className="m-10">Loading user data...</div>
         )}
