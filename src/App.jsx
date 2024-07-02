@@ -51,7 +51,7 @@ function App({}) {
 
   const inpval = { email: "example@example.com" };
   const instance = new RaptorX({
-      api_key: "9a60f01e9b7d2d5d37a1b134241311fd7dfdbc38",
+      api_key: "60480409b25ac5cc2cfd67b2af7d3e8aa5217734",
     });
 
   useEffect(() => {
