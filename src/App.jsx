@@ -23,6 +23,7 @@ import Billing from "./pages/billing/Billing";
 import AddBeneficary from './pages/beneficiary/AddBeneficiary'
 import Navbar from "./component/common/Navbar";
 import SideBar from "./component/sideBar/SideBar";
+import ResetPassword from "./component/core/ResetPassword";
 
 function App({}) {
   const [balance, setBalance] = useState(() => {
@@ -65,7 +66,7 @@ function App({}) {
     captureLoginEvent();
   }, [inpval.email]);
 
-  const excludeNavbarSidebarRoutes = ['/addmoney', '/sendmoney', '/login', '/success', '/'];
+  const excludeNavbarSidebarRoutes = ['/addmoney', '/sendmoney', '/login', '/success', '/', '/signup', '/forgotpassword', '/reset-password', '*'];
 
 
   useEffect(() => {
@@ -186,67 +187,6 @@ function App({}) {
   
     addTransaction(transaction);
   };
-
-
-
-
-  // const handleSendMoney = (
-  //   receiverName,
-  //   recipientAccountNumber,
-  //   amount,
-  // ) => {
-  //   if (balance < amount) {
-  //     alert("Insufficient balance");
-  //     return;
-  //   }
-  
-  //   const updatedSenderBalance = balance - amount;
-  //   updateBalance(updatedSenderBalance);
-  
-  //   const updatedUsersData = usersData.map(user => {
-  //     const updatedUser = { ...user };
-  //     updatedUser.balance = parseFloat(updatedUser.balance) + parseFloat(amount);
-  //     return updatedUser;
-  //   });
-  
-  //   setUsersData(updatedUsersData);
-  
-  //   const currentDate = new Date().toISOString();
-  //   instance.getTransaction({
-  //     user_fullname: loggedInUser.name,
-  //     from_account: loggedInUser.accountNumber,
-  //     to_account: "", 
-  //     transactiondate: currentDate,
-  //     status: "complete",
-  //     bank_ecom_indicator: "bank",
-  //     transactionamount: amount,
-  //     transactioncurrency: "INR",
-  //     transaction_medium:"web",
-  //     bank_beneficiary_name:receiverName,
-  //     bank_beneficiary_account_no:recipientAccountNumber,
-  //     user_id: instance.retrieveCustomerId(),
-  //   });
-  
-  //   navigate("/success");
-  //   setTimeout(() => {
-  //     navigate("/home");
-  //   }, 2000);
-  
-  //   const transaction = {
-  //     date: formattedDateTime,
-  //     type: "Debited",
-  //     amount: amount,
-  //     sender: loggedInUserEmail,
-  //     receiver: receiverName, // Removed recipient account number from receiver field
-  //     balance: updatedSenderBalance,
-  //   };
-  
-  //   const existingTransactions = JSON.parse(localStorage.getItem("transactions")) || [];
-  //   const updatedTransactions = [...existingTransactions, transaction];
-  //   localStorage.setItem("transactions", JSON.stringify(updatedTransactions));
-  
-  //   addTransaction(transaction);
-  // };
   
 
   return (
@@ -266,6 +206,7 @@ function App({}) {
               element={<LoginPage handleLogin={handleLogin} instance={instance}/>}
             />
             <Route path="/forgotpassword" element={<ForgotPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
             <Route
               path="/transactions"
               element={<Transaction loggedInUserEmail={loggedInUserEmail} transactions={transactions} instance={instance} />}

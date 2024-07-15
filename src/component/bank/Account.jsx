@@ -83,3 +83,82 @@ export default function Account({instance }) {
     </div>
   );
 }
+
+
+
+
+
+// import React, { useState, useEffect } from "react";
+// import axios from "axios";
+// import { useNavigate } from "react-router-dom";
+
+// export default function Account({ instance }) {
+//   const [loggedInUser, setLoggedInUser] = useState(null);
+//   const [isLoading, setIsLoading] = useState(true);
+//   const [error, setError] = useState(null);
+//   const navigate = useNavigate();
+
+//   useEffect(() => {
+//     const fetchUserData = async () => {
+//       try {
+//         const email = localStorage.getItem("loggedInUserEmail");
+//         if (!email) {
+//           setError("User not logged in");
+//           setIsLoading(false);
+//           return;
+//         }
+
+//         const response = await axios.get(`http://localhost:5000/userdetails/${email}`);
+//         const userData = response.data;
+
+//         if (!userData) {
+//           setError("User details not found");
+//         } else {
+//           setLoggedInUser(userData);
+//         }
+//       } catch (error) {
+//         setError("Failed to fetch user details");
+//       } finally {
+//         setIsLoading(false);
+//       }
+//     };
+
+//     fetchUserData();
+//   }, []);
+
+//   return (
+//     <div className="flex bg-[#0F141D] h-screen w-full">
+//       <div className="w-full">
+//         {isLoading && <div className="m-10">Loading user data...</div>}
+//         {error && <div className="m-10 text-red-500">{error}</div>}
+//         {!isLoading && !error && (
+//           <div className="m-10 border border-gray-700 rounded-lg">
+//             <div className="flow-root bg-[#020811] text-white border-white">
+//               <div className="divide-y divide-gray-700 text-sm">
+//                 <div className="px-3 grid grid-cols-1 gap-1 py-3 even:bg-gray-700 sm:grid-cols-3 sm:gap-4">
+//                   <dt className="font-medium text-gray-400">First Name</dt>
+//                   <dd className="text-gray-400 sm:col-span-2">{loggedInUser.firstName}</dd>
+//                 </div>
+
+//                 <div className="px-3 grid grid-cols-1 gap-1 py-3 even:bg-gray-700 sm:grid-cols-3 sm:gap-4">
+//                   <dt className="font-medium text-gray-400">Last Name</dt>
+//                   <dd className="text-gray-400 sm:col-span-2">{loggedInUser.lastName}</dd>
+//                 </div>
+
+//                 <div className="px-3 grid grid-cols-1 gap-1 py-3 even:bg-gray-700 sm:grid-cols-3 sm:gap-4">
+//                   <dt className="font-medium text-gray-400">Email Id</dt>
+//                   <dd className="text-gray-400 sm:col-span-2">{loggedInUser.email}</dd>
+//                 </div>
+
+//                 <div className="px-3 grid grid-cols-1 gap-1 py-3 even:bg-gray-700 sm:grid-cols-3 sm:gap-4">
+//                   <dt className="font-medium text-gray-400">Balance</dt>
+//                   <dd className="text-gray-400 sm:col-span-2">{loggedInUser.balance}</dd>
+//                 </div>
+//               </div>
+//             </div>
+//           </div>
+//         )}
+//       </div>
+//     </div>
+//   );
+// }
