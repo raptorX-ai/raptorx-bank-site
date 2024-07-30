@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import favicon from '../../assets/favicon.ico';
 
 export default function ResetPassword() {
@@ -8,6 +8,7 @@ export default function ResetPassword() {
   const [otp, setOtp] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,7 +18,8 @@ export default function ResetPassword() {
         otp,
         newPassword,
       });
-      setMessage(response.data.message);
+      alert('Account password reset succesfully!')
+      navigate('/login');
     } catch (error) {
       setMessage(error.response.data.error);
     }

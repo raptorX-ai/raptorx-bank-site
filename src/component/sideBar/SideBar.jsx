@@ -3,6 +3,8 @@ import { NavLink, useLocation } from "react-router-dom";
 import { MdAccountCircle } from "react-icons/md";
 import { FaCreditCard } from "react-icons/fa6";
 import { IoHomeOutline, IoSettingsOutline } from "react-icons/io5";
+import { GrAtm } from "react-icons/gr";
+import { FaAmazonPay } from "react-icons/fa";
 import { GrTransaction } from "react-icons/gr";
 import { IoMdPersonAdd } from "react-icons/io";
 
@@ -14,8 +16,8 @@ const SideBar = () => {
 
   return (
     <>
-      <div className="flex bg-[#020811] h-auto w-40 ">
-        <ul className="border-e">
+      <div className="flex bg-[#020811] h-screen w-">
+        <ul className="">
           <NavLink to="" exact activeClassName="active">
             <img src={mainLogo} className="mt-5 px-4" alt="Main Logo" />
           </NavLink>
@@ -31,6 +33,33 @@ const SideBar = () => {
               <span className="text-sm font-medium"> Home </span>
             </NavLink>
           </li>
+
+          <li>
+            <NavLink
+              to="/atm-withdrawal"
+              className={`flex items-center gap-2 px-4 py-3 text-gray-500  hover:bg-[#0F141D] hover:text-gray-400 ${
+                location.pathname === "/atm-withdrawal" ? "active border-s-[3px] border-gray-500" : ""
+              }`}
+              activeClassName="active"
+            >
+              <GrAtm />
+              <span className="text-sm font-medium"> ATM Withdrawls </span>
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
+              to="/raptorx-pay"
+              className={`flex items-center gap-2 px-4 py-3 text-gray-500  hover:bg-[#0F141D] hover:text-gray-400 ${
+                location.pathname === "/raptorx-pay" ? "active border-s-[3px] border-gray-500" : ""
+              }`}
+              activeClassName="active"
+            >
+              <FaAmazonPay />
+              <span className="text-sm font-medium"> Raptorx Pay </span>
+            </NavLink>
+          </li>
+          
           <li>
             <NavLink
               to="/transactions"
